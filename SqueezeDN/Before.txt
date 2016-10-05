@@ -1,4 +1,12 @@
-import apcslib.Format;
+
+	
+ 	  		   			    				bingo
+\t
+  	 	      	 	 	  	 
+  	 	      	 	 	  	  
+ 	 	  	          	  	  	   				 	 	 	 	 	     			 	 	bingo
+ 	 	  	          	  	  	   				 	 	 	 	 	     			 	 	
+ 	 	  	        import apcslib.Format;
 import chn.util.*;
 
 public class SqueezeDN {
@@ -25,7 +33,7 @@ public class SqueezeDN {
 					empty = false;
 				count++;
 			}		
-			if(s.trim().length() == 0)
+			if(s.length() != 0 && s.substring(count).length() == 0)
 				spaceCount = 0;
 			
 			outFile.println(Format.right(Integer.toString(spaceCount), 2) 

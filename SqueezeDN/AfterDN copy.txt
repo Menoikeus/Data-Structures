@@ -1,0 +1,28 @@
+ 0	import chn.util.*;
+ 0	
+ 0	public class SqueezeDN {
+ 4	public static void main(String[] args)
+ 4	{
+ 8	FileInput inFile = new FileInput("testing.txt");
+ 8		
+ 8	while(inFile.hasMoreLines())
+ 8	{
+10	String s = inFile.readLine();
+12		
+16	int spaceCount = 0, count = 0;
+12	boolean empty = true;
+12	while(empty)
+12	{
+20	if(s.substring(count, count+1).equals(" "))
+20	spaceCount++;
+16	else if(s.substring(count, count+1).equals("\t"))
+20	spaceCount += 4 - count % 4;
+16	else
+20	empty = false;
+16	count++;
+12	}
+12		
+12	System.out.println(spaceCount + ":  " + s);
+ 8	}
+ 4	}
+ 0	}

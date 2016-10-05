@@ -1,0 +1,46 @@
+ 0	
+ 0		
+44	bingo
+ 0	\t
+ 0	 
+ 0	 
+92	bingo
+ 0		
+20	import apcslib.Format;
+ 0	import chn.util.*;
+ 0	
+ 0	public class SqueezeDN {
+ 4	public static final int TAB_LENGTH = 4;
+ 0		
+ 4	public static void main(String[] args)
+ 4	{
+ 8	FileInput inFile = new FileInput("Before.txt");
+ 8	FileOutput outFile = new FileOutput("AfterDN.txt");
+ 0		
+ 8	while(inFile.hasMoreLines())
+ 8	{
+12	String s = inFile.readLine();
+ 0		
+12	int spaceCount = 0, count = 0;
+12	boolean empty = true;
+12	while(empty && count < s.length())
+12	{
+16	if(s.substring(count, count+1).equals(" "))
+20	spaceCount++;
+16	else if(s.substring(count, count+1).equals("\t"))
+20	spaceCount += TAB_LENGTH - spaceCount % TAB_LENGTH;
+16	else
+20	empty = false;
+16	count++;
+12	}		
+12	if(s.length() != 0 && s.substring(count).length() == 0)
+16	spaceCount = 0;
+ 0		
+12	outFile.println(Format.right(Integer.toString(spaceCount), 2) 
+28	+ "\t" 
+28	+ (s.length() == 0 ? "" : s.substring(count-1)));
+ 8	}
+ 8	inFile.close();
+ 8	outFile.close();
+ 4	}
+ 0	}
