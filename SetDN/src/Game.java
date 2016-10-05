@@ -123,7 +123,7 @@ public class Game extends JFrame implements KeyListener{
 				}
 					
 			}
-		for(int i = 0; i < nullCount && addQueue.size() < nullCount; i++)
+		for(int i = 0; i < nullCount && addQueue.size() < nullCount && deck.size() > 0; i++)
 			addQueue.add(deck.remove((int)(Math.random() * deck.size())));
 	}
 	
@@ -263,12 +263,12 @@ public class Game extends JFrame implements KeyListener{
 			RepopulateBoard();
 			
 			//if you run out of time, you lose points!
-			if(players[0].isSelecting() && players[0].timeSinceSelectStart() > 7000 * (long)Math.pow(10,6))
+			if(players[0].isSelecting() && players[0].timeSinceSelectStart() > 9000 * (long)Math.pow(10,6))
 			{
 				players[0].ClearQueue();
 				players[0].changeScore(-1);
 			}
-			if(players[1].isSelecting() && players[1].timeSinceSelectStart() > 7000 * (long)Math.pow(10,6))
+			if(players[1].isSelecting() && players[1].timeSinceSelectStart() > 9000 * (long)Math.pow(10,6))
 			{
 				players[1].ClearQueue();
 				players[1].changeScore(-1);

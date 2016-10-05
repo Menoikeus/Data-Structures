@@ -24,7 +24,7 @@ public class ComputerPlayer extends Player{
 	
 	public int GetInput(int keycode, Card[][] board, ArrayList<ArrayList<Integer>> dQueue, boolean otherSelecting)
 	{	
-		if(designatedSet == null && System.nanoTime() - timeSinceLastSet > 5000 * Math.pow(10, 6) && !otherSelecting)
+		if(designatedSet == null && System.nanoTime() - timeSinceLastSet > 8000 * Math.pow(10, 6) && !otherSelecting)
 		{
 			ArrayList<ArrayList<Integer>> possibleSets = new ArrayList<ArrayList<Integer>>();
 			

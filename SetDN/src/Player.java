@@ -69,6 +69,7 @@ public abstract class Player {
 		System.out.println(startIndex);
 		if(isIn)
 		{
+			System.out.print("REMOVING (SUPPOSEDLY)");
 			int tempSelected[][] = new int[3][2];
 			for(int a = 0; a < tempSelected.length; a++)
 			{
@@ -86,6 +87,8 @@ public abstract class Player {
 					count++;
 				}
 			}
+			selected[count][0] = -1;
+			selected[count][1] = -1;
 			return -1;
 		}
 		else if(startIndex != -1)
