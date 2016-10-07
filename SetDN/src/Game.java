@@ -147,6 +147,14 @@ public class Game extends JFrame implements KeyListener{
 			}
 		for(int i = 0; i < nullCount && addQueue.size() < nullCount && deck.size() > 0; i++)
 			addQueue.add(deck.remove((int)(Math.random() * deck.size())));
+		if(deck.size() == 0) // if we've run out of deck cards, find a winner
+		{
+			if(players[0].getScore() == players[1].getScore())
+				JOptionPane.showMessageDialog(null, "GAME OVER. TIE GAME.");
+			else 
+				JOptionPane.showMessageDialog(null, "GAME OVER. " + players[players[0].getScore() > players[1].getScore() ? 0 : 1].getName() + " won.");
+			System.exit(0);
+		}
 	}
 	
 	//refresh each frame, i think
