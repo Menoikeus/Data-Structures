@@ -1,8 +1,8 @@
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-
 public class HumanPlayer extends Player{
+	//player number and control set
 	private int playerNumber;
 	private int[] controls;
 	
@@ -13,6 +13,7 @@ public class HumanPlayer extends Player{
 		
 		controls = new int[5];
 		
+		//change the controls for each player
 		System.out.println(playerNumber);
 		switch(playerNumber)
 		{
@@ -35,6 +36,7 @@ public class HumanPlayer extends Player{
 	
 	public int GetInput(int keycode, Card[][] board, ArrayList<ArrayList<Integer>> dQueue, boolean otherSelecting)
 	{
+		//take in the keycode, and move based on what key was pressed
 		if(keycode == controls[0])
 			super.changeXBy(-1);
 		if(keycode == controls[1])
@@ -45,15 +47,14 @@ public class HumanPlayer extends Player{
 			super.changeYBy(1);
 		if(keycode == controls[4] && !otherSelecting)
 		{
-			
+			//add a card to the selected cards list, and toggle selecting if it hasn't been toggled already
+			//make sure we're not deleting it too
 			if(!super.isSelecting())
 				super.toggleSelecting();
 			boolean notDeleting = true;
 			for(int a = 0; a < dQueue.size(); a++)
-			{
 				if(dQueue.get(a).get(0).intValue() == super.getX() && dQueue.get(a).get(1).intValue() == super.getY())
 					notDeleting = false;
-			}
 			if(board[super.getY()][super.getX()] != null && notDeleting)
 				return super.addSet();
 			else
@@ -62,13 +63,14 @@ public class HumanPlayer extends Player{
 		}
 		return 0;
 		
-		
+		// these are the meanings of the return values
 		// 1 = successfully added
 		// 0 = moved
 		// -1 = already exists
 		// -2 = full queue (enter)
 	}
 	
+	// am i selecting?
 	public boolean isSelecting()
 	{
 		return super.isSelecting();

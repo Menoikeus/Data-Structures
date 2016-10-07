@@ -13,6 +13,7 @@ public class Card {
 	
 	public Card(int n, int c, int f, int s)
 	{
+		//create a card based on values, and make an id
 		number = n;
 		color = c;
 		shape = f;

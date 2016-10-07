@@ -1,15 +1,7 @@
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
+//main, blah blah, starts the actual program
 public class SetDN{
-	private static BufferedImage image;
-	
 	public static void main(String[] args)
 	{
 		Game tool = new Game();

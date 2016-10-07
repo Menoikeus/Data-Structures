@@ -3,19 +3,21 @@ import java.util.ArrayList;
 
 
 public class ComputerPlayer extends Player{
-	private int playerNumber;
+	//player info: number, queue for computer moves, and designated cards for the set
 	private ArrayList<ComputerMoves> moveQueue;
 	private ArrayList<Integer> designatedSet;
 	
+	//self explanatory
 	private long timeSinceLastSet;
 	private long timeSinceLastMove;
 	
 	public ComputerPlayer(String n, int pN)
 	{
 		super(n);
-		playerNumber = pN;
 		
+		//new arraylist of moves
 		moveQueue = new ArrayList<ComputerMoves>();
+		//this will be an arraylist of arraylists later
 		designatedSet = null;
 		
 		timeSinceLastSet = System.nanoTime();
@@ -24,10 +26,13 @@ public class ComputerPlayer extends Player{
 	
 	public int GetInput(int keycode, Card[][] board, ArrayList<ArrayList<Integer>> dQueue, boolean otherSelecting)
 	{	
+		//if we have no designated set and enough time has passed
 		if(designatedSet == null && System.nanoTime() - timeSinceLastSet > 8000 * Math.pow(10, 6) && !otherSelecting)
 		{
+			//create new arraylist of possible sets
 			ArrayList<ArrayList<Integer>> possibleSets = new ArrayList<ArrayList<Integer>>();
 			
+			//get all possible combinations
 			for(int a = 0; a < board.length; a++)
 				for(int b = 0; b < board[a].length; b++)
 					for(int c = 0; c < board.length; c++)
@@ -35,8 +40,10 @@ public class ComputerPlayer extends Player{
 							for(int e = 0; e < board.length; e++)
 								for(int f = 0; f < board[e].length; f++)
 								{
-									boolean notDeleting = true, notSameOrEmpty = false;;
-									//if(board[a][b] != board[c][d] && board[c][d] != board[e][f] && board[a][b] != null && board[c][d] != null && board[e][f] != null)
+									//make suer we're not in the process of deleting any cards
+									//also make sure the cards are not the same cards (by location)
+									//and that the cards actually exist
+									boolean notDeleting = true, notSameOrEmpty = false;
 									if(!(a + " " + b).equals(c + " " + d) 
 											&& !(c + " " + d).equals(e + " " + f) 
 											&& !(a + " " + b).equals(e + " " + f) 
@@ -45,6 +52,7 @@ public class ComputerPlayer extends Player{
 											&& board[e][f] != null)
 									{
 										notSameOrEmpty = true;
+										//make sure we're not selecting
 										for(int k = 0; k < dQueue.size(); k++)
 										{
 											if(dQueue.get(k).get(0).intValue() == b
@@ -57,8 +65,10 @@ public class ComputerPlayer extends Player{
 										}
 									}
 									
+									//if we're not deleting and they aren't blah blah... start checking if they're valid
 									if(notDeleting && notSameOrEmpty)
 									{
+										//basically same algorith in checkvalidset
 										boolean allValid = true;	
 										for(int i = 0; i < board[a][b].getID().length(); i++)
 										{
@@ -75,9 +85,9 @@ public class ComputerPlayer extends Player{
 											
 											if(allEqual == false && allDif == false)
 												allValid = false;
-											//System.out.println(allEqual + " " + allDif);
 										}
 										
+										//if the set was valid, add it to the possible sets queue
 										if(allValid)
 										{
 											System.out.println(a + " " + b + " " + c + " " + d + " " + e + " " + f);
@@ -93,16 +103,13 @@ public class ComputerPlayer extends Player{
 										}
 									}
 								}
+			//if there is an available set and there are no pending moves, add to the movequeue
 			if(possibleSets.size() > 0 && !(moveQueue.size() > 0))
 			{
-				/*for(int i = 0; i < possibleSets.get(0).size(); i++)
-					System.out.print(possibleSets.get(0).get(i).intValue() + " ");*/
-				
 				designatedSet = possibleSets.get((int)(Math.random() * possibleSets.size()));
 				System.out.println("DESIGNATED SET: " + designatedSet.get(0).intValue() + designatedSet.get(1).intValue() + designatedSet.get(2).intValue() + designatedSet.get(3).intValue() + designatedSet.get(4).intValue() + designatedSet.get(5).intValue());
 				GenerateMoveSet();
 			}
-			//System.out.println();
 		}
 		
 		//slow down the computer
@@ -118,6 +125,8 @@ public class ComputerPlayer extends Player{
 			}
 			if(moveQueue.size() > 0)
 			{
+				//if you have some moves to do, take down the move
+				//here, we pretend to be a human and so we do a human move
 				move = moveQueue.remove(0);
 				switch(move)
 				{
@@ -155,23 +164,27 @@ public class ComputerPlayer extends Player{
 		// -2 = full queue (enter)
 	}
 	
+	//return if its selecting
 	public boolean isSelecting()
 	{
 		return super.isSelecting();
 	}
 	
+	//setup an enum for easy understanding
 	public enum ComputerMoves
 	{
 		LEFT, UP, RIGHT, DOWN, ENTER, SELECT;
 	}
 	
+	//generate moves in order to get a set
 	public void GenerateMoveSet()
 	{
 		moveQueue.add(ComputerMoves.SELECT); //we want to start selecting, so that we block out
 											//the human player and prevent them from messing things up
 		for(int i = 0; i < designatedSet.size()/2; i++)
 		{
-			System.out.println(designatedSet.get(0 + i * 2) + " " + designatedSet.get(1 + i * 2) + " \t");
+			//System.out.println(designatedSet.get(0 + i * 2) + " " + designatedSet.get(1 + i * 2) + " \t");
+			//Get the offset between the current position and the designated cards in the set
 			int xOffset, yOffset;
 			if(i == 0)
 			{
@@ -183,6 +196,8 @@ public class ComputerPlayer extends Player{
 				yOffset = designatedSet.get(0 + i * 2) - designatedSet.get(0 + (i - 1) * 2);
 				xOffset = designatedSet.get(1 + i * 2) - designatedSet.get(1 + (i - 1) * 2);
 			}
+			
+			//add moves based on the offset, and whether it is positive or negative
 			for(int a = 0; a < Math.abs(xOffset); a++)
 			{
 				if(xOffset < 0)
@@ -197,11 +212,8 @@ public class ComputerPlayer extends Player{
 				if(yOffset > 0)
 					moveQueue.add(ComputerMoves.DOWN);
 			}
+			//once its on the card, select it
 			moveQueue.add(ComputerMoves.ENTER);
 		}
-		
-		for(int i = 0; i < moveQueue.size(); i++)
-			System.out.println(moveQueue.get(i));
-		
 	}
 }

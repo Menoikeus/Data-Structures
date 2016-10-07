@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 
 public abstract class Player {
+	//player stuff, name, score, selector location, selected cards queue, whether it is selecting or not, time since you started selecting
 	private String name;
 	private int score;
 	private int selectorX, selectorY;
@@ -22,6 +23,7 @@ public abstract class Player {
 				selected[i][h] = -1;
 	}
 	
+	//abstract getinput
 	public abstract int GetInput(int keycode, Card[][] board, ArrayList<ArrayList<Integer>> dQueue, boolean otherSelecting);
 	
 	public int getX()
@@ -33,6 +35,7 @@ public abstract class Player {
 		return selectorY;
 	}
 	
+	//mutators for selector
 	public void changeXBy(int x)
 	{
 		selectorX += x;
@@ -50,11 +53,13 @@ public abstract class Player {
 			selectorY = 0;
 	}
 	
+	//add card to set, check if it's valid
 	public int addSet()
 	{
 		int startIndex = -1;
 		int removeIndex = -1;
 		boolean isIn = false;
+		//make sure its not already in the queue
 		for(int i = 0; i < selected.length; i++)
 		{
 			if(selected[i][0] == selectorX && selected[i][1] == selectorY)
@@ -67,6 +72,7 @@ public abstract class Player {
 		}
 		
 		System.out.println(startIndex);
+		//if it is, remove that card and shift everything down
 		if(isIn)
 		{
 			System.out.print("REMOVING (SUPPOSEDLY)");
@@ -90,9 +96,11 @@ public abstract class Player {
 			selected[count][0] = -1;
 			selected[count][1] = -1;
 			return -1;
-		}
+		} 
 		else if(startIndex != -1)
 		{
+			//else if its full then return that there is a full queue
+			//else say that it was successfully added
 				selected[startIndex][0] = selectorX;
 				selected[startIndex][1] = selectorY;
 				if(startIndex == 2)
@@ -148,6 +156,11 @@ public abstract class Player {
 	public int getScore()
 	{
 		return score;
+	}
+	
+	public String getName()
+	{
+		return name;
 	}
 
 }
