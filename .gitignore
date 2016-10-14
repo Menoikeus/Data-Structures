@@ -15,3 +15,5 @@ hs_err_pid*
 SqueezeDN/AfterDN copy.txt
 
 SqueezeDN/Before.txt
+
+*.prefs
