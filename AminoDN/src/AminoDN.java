@@ -9,29 +9,25 @@ public class AminoDN {
 		FileInput inFile = new FileInput("H:\\DNA\\test.txt");
 		FileOutput outFile = new FileOutput("H:\\DNA\\AfterDN.txt");
 		
-		ArrayList<ArrayList<String>> translations = new ArrayList<ArrayList<String>>();
+		ArrayList<String> translations = new ArrayList<String>();
 		
 		int count = 0;
 		while(translationFile.hasMoreLines())
 		{
 			String s = translationFile.readLine();
-			String[] values = s.split("[\t,]+");
+			String formattedS = s.replace("\t", "*");
 			
-			ArrayList<String> valuesInLine = new ArrayList<String>();
-			for(int i = 0; i < values.length; i++)
-				valuesInLine.add(values[i]);
-			translations.add(valuesInLine);	
+			translations.add(formattedS);
 				
 			count++;
 		}
 		
 		for(int i = 0; i < translations.size(); i++)
 		{
-			for(int j = 0; j < translations.get(i).size(); j++)
-				System.out.print(translations.get(i).get(j) + " ");
-			System.out.println();
+			System.out.println(translations.get(i));
 		}
 		
+		/*
 		while(inFile.hasMoreLines())
 		{
 			String s = inFile.readLine();
@@ -44,6 +40,6 @@ public class AminoDN {
 			{
 				String codon = s.substring(codonCount * 3 + start, codonCount * 3 + start + 3);
 			}
-		}
+		}*/
 	}
 }
