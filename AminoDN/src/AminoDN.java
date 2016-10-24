@@ -5,14 +5,15 @@ import chn.util.*;
 public class AminoDN {
 	public static void main(String[] args)
 	{
-		//FileInput translationFile = new FileInput("H:\\DNA\\codon_to_amino.txt");
-		//FileInput inFile = new FileInput("H:\\DNA\\test.txt");
-		//FileOutput outFile = new FileOutput("H:\\DNA\\after_result_DN.txt");
-		FileInput translationFile = new FileInput("codon_to_amino.txt");
-		FileInput inFile = new FileInput("rna_info.txt");
-		FileOutput outFile = new FileOutput("after_result_DN.txt");
+		FileInput translationFile = new FileInput("H:\\DNA\\codon_to_amino.txt");
+		FileInput inFile = new FileInput("H:\\DNA\\rna_info.txt");
+		FileOutput outFile = new FileOutput("H:\\DNA\\after_result_DN.txt");
+		//FileInput translationFile = new FileInput("codon_to_amino.txt");
+		//FileInput inFile = new FileInput("rna_info.txt");
+		//FileOutput outFile = new FileOutput("after_result_DN.txt");
 		
-		ArrayList<String> translations = new ArrayList<String>(); //array list of the translations in the file
+		//array list of the translations in the file
+		ArrayList<String> translations = new ArrayList<String>(); 
 		
 		//line number of where the starts appear in the file
 		int indexOfStarts = 0;
@@ -57,29 +58,39 @@ public class AminoDN {
 					String acidAddition = "";		//the amino chain we're going to be adding to the translated line
 					while(stillReading)
 					{
-						String codon = s.substring(lineStart + 3 * codonCount, lineStart + 3 * codonCount + 3); //get the next codon in the chain
+						//get the next codon in the chain
+						String codon = s.substring(lineStart + 3 * codonCount, lineStart + 3 * codonCount + 3); 
 						
-						String val = "";	//value will store the translated values
-						for(int z = translations.size()-1; z >= 0; z--)		//traverse from the back, so that we can see if it stops first
-							if(translations.get(z).indexOf(codon) != -1 && val == "" && z != indexOfStarts)		//if the codon exists in one of the 
-								val = extractCodons(translations.get(z))[0];									//translation lines, set 'val' to the value before the *. Also make sure not to read anything as a 'START'
+						String val = "";	//value will store the translated value
+											//traverse from the back, so that we can see if it stops first
+						for(int z = translations.size()-1; z >= 0; z--)		
+							if(translations.get(z).indexOf(codon) != -1 && val == "" && z != indexOfStarts)		
+								val = extractCodons(translations.get(z))[0];	
+						//if the codon exists in one of the 
+						//translation lines, set 'val' to the value before the *. 
+						//Also make sure not to read anything as a 'START'
+						
 						if(val.equals("STOP"))
 							stillReading = false; //if it's a stop, get out of reading
 						else
 							acidAddition += val;  //else, add the codon to the current chain
-
-						codonCount++;			//increment the number of codons we've counted, so we can count the next one
+						
+						//increment the number of codons we've counted, so we can count the next one
+						codonCount++;			
 						if(!(lineStart + 3 * codonCount + 3 <= s.length()))
 							stillReading = false; //if we're out of bounds, stop
 					}
-					if(acidAddition.equals(""))		//if the acid addition was empty, we've got an START-STOP or START-END
+					
+					//if the acid addition was empty, we've got an START-STOP or START-END
+					if(acidAddition.equals(""))		
 						aminoAcids += "NULL";
 					else							//else add the current chain to the current line
 						aminoAcids += acidAddition;
 					aminoAcids += " ";				//space after
 					
-					currentLineStart = lineStart + 3 * codonCount;	//we're going to cut out the chain we just read and everything before it
-																	//this is the index of the next codon
+					//we're going to cut out the chain we just read and everything before it
+					//this is the index of the next codon
+					currentLineStart = lineStart + 3 * codonCount;	
 				}
 				else
 					stillInLine = false;	//if we didn't find any START, end the line read
@@ -92,8 +103,10 @@ public class AminoDN {
 		//write translated acids to file
 		for(int j = 0; j < translatedLines.size(); j++)
 		{
-			outFile.println((j+1) + ": " + translatedLines.get(j));
-			System.out.println((j+1) + ": " + translatedLines.get(j));
+			outFile.println(Format.right(Integer.toString(j+1), 2) 
+					+ ": " + translatedLines.get(j));
+			System.out.println(Format.right(Integer.toString(j+1), 2)  
+					+ ": " + translatedLines.get(j));
 		}
 		
 		outFile.close();
@@ -101,7 +114,9 @@ public class AminoDN {
 	
 	public static String[] extractCodons(String translations)
 	{
-		return translations.split("[*,]"); //splits the lines and finds the values
+		//splits the lines and finds the values
+		//returns values in an array, so that we can later get the translation
+		return translations.split("[*,]"); 
 	}
 }
 
