@@ -5,15 +5,17 @@ import chn.util.*;
 public class AminoDN {
 	public static void main(String[] args)
 	{
-		FileInput translationFile = new FileInput("H:\\DNA\\codon_to_amino.txt");
-		FileInput inFile = new FileInput("H:\\DNA\\test.txt");
-		FileOutput outFile = new FileOutput("H:\\DNA\\AfterDN.txt");
+		//FileInput translationFile = new FileInput("H:\\DNA\\codon_to_amino.txt");
+		//FileInput inFile = new FileInput("H:\\DNA\\test.txt");
+		//FileOutput outFile = new FileOutput("H:\\DNA\\after_result_DN.txt");
+		FileInput translationFile = new FileInput("codon_to_amino.txt");
+		FileInput inFile = new FileInput("rna_info.txt");
+		FileOutput outFile = new FileOutput("after_result_DN.txt");
 		
 		ArrayList<String> translations = new ArrayList<String>(); //array list of the translations in the file
 		
-		//line number of where start and stop appear in the file
+		//line number of where the starts appear in the file
 		int indexOfStarts = 0;
-		int indexOfEnds = 0;
 		
 		while(translationFile.hasMoreLines())
 		{
@@ -27,8 +29,6 @@ public class AminoDN {
 			String[] vals = extractCodons(translations.get(i)); 
 			if(vals[0].equals("START"))
 				indexOfStarts = i;
-			else if(vals[0].equals("STOP"))
-				indexOfEnds = i;
 		}
 		
 		ArrayList<String> translatedLines = new ArrayList<String>(); //result from translations
@@ -86,11 +86,17 @@ public class AminoDN {
 				if(currentLineStart + 2 > s.length())
 					stillInLine = false;
 			}
-			translatedLines.add(aminoAcids);
+			translatedLines.add(aminoAcids); //add lines 
 		}
-
+		
+		//write translated acids to file
 		for(int j = 0; j < translatedLines.size(); j++)
-			System.out.println(j + ": " + translatedLines.get(j));
+		{
+			outFile.println((j+1) + ": " + translatedLines.get(j));
+			System.out.println((j+1) + ": " + translatedLines.get(j));
+		}
+		
+		outFile.close();
 	}
 	
 	public static String[] extractCodons(String translations)
