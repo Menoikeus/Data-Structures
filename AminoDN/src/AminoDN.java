@@ -6,7 +6,7 @@ public class AminoDN {
 	public static void main(String[] args)
 	{
 		FileInput translationFile = new FileInput("H:\\DNA\\codon_to_amino.txt");
-		FileInput inFile = new FileInput("H:\\DNA\\rna_info.txt");
+		FileInput inFile = new FileInput("H:\\DNA\\rna_info - kmc.txt");
 		FileOutput outFile = new FileOutput("H:\\DNA\\after_result_DN.txt");
 		//FileInput translationFile = new FileInput("codon_to_amino.txt");
 		//FileInput inFile = new FileInput("rna_info.txt");
@@ -68,7 +68,7 @@ public class AminoDN {
 					String acidAddition = "";		//the amino chain we're going 
 													//to be adding to the 
 													//translated line
-					while(stillReading)
+					while(stillReading && lineStart + codonCount * 3 + 2 < s.length())
 					{
 						//get the next codon in the chain
 						String codon = s.substring(lineStart + 3 * codonCount,
@@ -116,7 +116,7 @@ public class AminoDN {
 				else
 					stillInLine = false;	//if we didn't find any START, 
 											//end the line read
-				if(currentLineStart + 2 > s.length())
+				if(currentLineStart + 2 >= s.length())
 					stillInLine = false;
 			}
 			translatedLines.add(aminoAcids); //add lines 
