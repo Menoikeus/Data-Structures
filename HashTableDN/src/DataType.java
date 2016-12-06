@@ -17,6 +17,7 @@ public class DataType {
 		return firstName + " " + GPA;
 	}
 }
+<<<<<<< HEAD
 
 
 /* FROM LISTNODEKMC
@@ -42,3 +43,5 @@ public class DataType {
 		}
 	}
 */
+=======
+>>>>>>> branch 'master' of https://github.com/Menoikeus/Data-Structures.git
