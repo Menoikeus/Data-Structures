@@ -8,7 +8,7 @@ public class ACSL1DNguyen {
 		{
 			try
 			{
-				String stringOfCards = JOptionPane.showInputDialog(null, "CARDS (IN FORMAT \"AX BY CZ...\"): ");
+				String stringOfCards = JOptionPane.showInputDialog(null, "CARDS (IN FORMAT \"AX BY CZ...\"), WHERE FIRST VALUE IS LEAD CARD: ");
 				String[] cards = stringOfCards.split(" ");
 				final String cardValues = "A23456789TJQK";
 				
