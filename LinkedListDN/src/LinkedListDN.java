@@ -6,13 +6,6 @@ public class LinkedListDN {
 		// new list
 		LinkedListKMC list = new LinkedListKMC();
 		
-		for(int i = 0; i < 15; i++)
-			list.addAtFront((int)(Math.random() * 15));
-		list.addAtFront(5);
-		list.addAtFront(5);
-		list.addAtFront(5);
-		list.addAtFront(5);
-		
 		//keep running until the user stops it
 		boolean done = false;
 		while(!done)
@@ -47,6 +40,8 @@ public class LinkedListDN {
 					list.addAtFront(getIntInput(
 							"What value do you wish to add at the front?"));
 					break;
+				case 3:
+					break;
 				case 4:
 					list.delete(getIntInput(
 							"What value do you wish to delete?"));
@@ -80,15 +75,17 @@ public class LinkedListDN {
 				case 11:
 					list.removeDuplicates();
 					break;
-				case 12:
-					JOptionPane.showMessageDialog(null, 
-							list.printBackwards(list.getFirstNode()));
+				case 12: 
+					String o = list.printBackwards(list.getFirstNode());
+					if(!o.isEmpty())
+						JOptionPane.showMessageDialog(null, o);
 					break;
 				case 13: 
 					done = true;
 					break;
 				default:
-					JOptionPane.showMessageDialog(null, "Doesn't seem to be a valid choice...");
+					JOptionPane.showMessageDialog(null, 
+							"Doesn't seem to be a valid choice...");
 			}
 			JOptionPane.showMessageDialog(null, list.print());
 		}
@@ -118,6 +115,8 @@ public class LinkedListDN {
 						"Oi mate. I need a number.");
 			}		
 		}
+		
+		//return the validated value
 		return number;
 	}
 }

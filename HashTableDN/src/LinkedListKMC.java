@@ -48,10 +48,10 @@ public class LinkedListKMC
  			ListNode current = first;
  			while (current != null)
  			{
- 				output += current.getValue() + " ";
+ 				output += current.getValue() + " | ";
  				current = current.getNext();
  			}
- 			return "Current list: " + output;
+ 			return output;
  		}
  	}
  	
@@ -86,6 +86,28 @@ public class LinkedListKMC
 		{
 			//if the next one is equal, connect
 			if(current.getNext().getValue().equals(value))
+				current.setNext(current.getNext().getNext());
+			else
+				current = current.getNext();
+			//if not, go to the next node
+		}
+ 	}
+ 	
+ 	//delete method, specifically to delete table entry keys
+ 	public void deleteTableEntryKey(String key)
+ 	{
+ 		//this clears out the cases where the first node's value is equal
+		while(first != null && ((TableEntry)first.getValue()).getKey().equals(key))
+			first = first.getNext();
+		
+		//now we go through and check the next value
+		//if the next value is equal, then take the current node
+		//and connect it to the 
+		ListNode current = first;
+		while(current != null && current.getNext() != null)
+		{
+			//if the next one is equal, connect
+			if(((TableEntry)current.getNext().getValue()).getKey().equals(key))
 				current.setNext(current.getNext().getNext());
 			else
 				current = current.getNext();
@@ -206,10 +228,8 @@ public class LinkedListKMC
  	//recursive print backwards
  	public String printBackwards(ListNode current)
  	{
- 		//keep adding the next value in front (until null)
- 		if(current != null) 
- 			return printBackwards(current.getNext()) + " " 
- 									+ current.getValue();
+ 		if(current != null) //keep adding the next value in front (until null)
+ 			return printBackwards(current.getNext()) + " " + current.getValue();
  		else
  			return "";
  		
