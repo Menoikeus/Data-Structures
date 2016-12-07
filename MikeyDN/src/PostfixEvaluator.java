@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PostfixEvaluator {
 	public static int Evaluate(String s)
@@ -36,7 +37,8 @@ public class PostfixEvaluator {
 					/*
 					outputValues.add(secondLatest + "");
 					outputValues.add(ch + "");
-					outputValues.add(latest + "");*/
+					outputValues.add(latest + "");
+					*/
 					first = false;
 				}
 				else
@@ -49,13 +51,49 @@ public class PostfixEvaluator {
 			}
 		}
 		
+		String whole = "";
+		ArrayList<String> alValues = new ArrayList<String>(Arrays.asList(values));
+		for(String z : alValues)
+			System.out.println(z);
+		
+		int i = alValues.size() - 1;
+		while(i > 0)
+		{
+			if(operations.indexOf(alValues.get(i)) != -1)
+			{
+				if(whole.isEmpty())
+				{
+					System.out.println(i + " " + alValues.size());
+					whole = alValues.get(i-2) + " " + alValues.get(i) + " " + alValues.get(i-1);
+					alValues.remove(i-2);
+					alValues.remove(i-2);
+					alValues.remove(i-2);
+					i -= 2;
+				}
+				else
+				{
+					whole += AddParentheses(whole) + " " + alValues.get(i) + " " + alValues.get(i-1);
+					alValues.remove(i-2);
+					alValues.remove(i-2);
+					i -= 1;
+				}
+			}
+			i--;
+			System.out.println(whole);
+		}
+		
 		String output = "";
 		for(String os : outputValues)
 		{
 			output += os;
 		}
 		
-		System.out.println(output);
+		System.out.println(whole);
 		return (int)stack.pop();
+	}
+	
+	private static String AddParentheses(String s)
+	{
+		return "(" + s + ")";
 	}
 }
