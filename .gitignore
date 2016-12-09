@@ -17,3 +17,5 @@ SqueezeDN/AfterDN copy.txt
 SqueezeDN/Before.txt
 
 *.prefs
+
+*.DS_Store
