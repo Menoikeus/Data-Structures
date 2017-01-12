@@ -3,8 +3,12 @@ import javax.swing.JOptionPane;
 public class MikeyDN {
 	public static void main(String[] args)
 	{
-		PostfixEvaluator evaluator = new PostfixEvaluator();
+		System.out.format("%-36s%-36s%12s%n", "Postfix", "Infix", "Result");
 		
-		System.out.println(evaluator.Evaluate(JOptionPane.showInputDialog(null, "Postfix Expression: ")));
+		String s;
+		while(!(s = JOptionPane.showInputDialog(null, "Postfix Expression: ")).toLowerCase().equals("quit"))
+		{
+			PostfixEvaluator.Evaluate(s);
+		}
 	}
 }
