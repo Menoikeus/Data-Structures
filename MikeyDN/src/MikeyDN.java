@@ -4,7 +4,7 @@ public class MikeyDN {
 	public static void main(String[] args)
 	{
 		// table heading
-		System.out.format("%-36s%-36s%12s%n", "Postfix", "Infix", "Result");
+		System.out.format("%-36s%-63s%12s%n", "Postfix", "Infix", "Result");
 		
 		// create string s to take in input, and check if it's 'quit'. if so, stop, if not, evaluate s
 		String s;

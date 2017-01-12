@@ -21,7 +21,9 @@ public class PostfixEvaluator {
 		boolean error = false, divideByZero = false; // two types of errors: input and divide by zero
 		if(numNumbers == numOperations + 1) // if there's one more number than operations
 		{
-			ArrayList<String> outputValues = new ArrayList<String>(); // arraylist for output
+			//ArrayList<String> outputValues = new ArrayList<String>(); // arraylist for output
+			Stack outputValues = new ArrayStack();
+			
 			int i = -1;
 			while(++i < values.length && !error && !divideByZero) // start at 0 and go through the 
 																// input array, until there's an error
@@ -32,7 +34,7 @@ public class PostfixEvaluator {
 				try
 				{
 					stack.push(Double.parseDouble(ch)); // cast value and push to stack
-					outputValues.add(ch); // add the letter to output string arraylist
+					outputValues.push(ch); // add the letter to output string arraylist
 				}
 				catch(Exception e)
 				{
@@ -63,11 +65,12 @@ public class PostfixEvaluator {
 							
 							if(!error && !divideByZero) // if we haven't errored, then add to output
 							{
-								String secondValue = outputValues.remove(outputValues.size() - 1);
-								String firstValue = outputValues.remove(outputValues.size() - 1);
+								// take last two
+								String secondValue = (String)outputValues.pop();
+								String firstValue = (String)outputValues.pop();
 								
-								// parentheses
-								outputValues.add("(" + firstValue + " " + ch + " " + secondValue + ")");
+								// parentheses and then add back
+								outputValues.push("(" + firstValue + " " + ch + " " + secondValue + ")");
 							}
 						}
 						else
@@ -79,18 +82,19 @@ public class PostfixEvaluator {
 			}
 			// if we haven't errored, print result
 			if(!error && !divideByZero)
-				System.out.format("%-36s%-36s%12.3f%n", s, 
-						outputValues.get(0).indexOf("(") != -1 ? 
-								outputValues.get(0).substring(1, outputValues.get(0).length() - 1) : 
-								outputValues.get(0), 
-									((Double)stack.pop()).doubleValue());
+			{
+				String out = ((String)outputValues.peekTop());
+				System.out.format("%-36s%-63s%12.3f%n", s, 
+						out.indexOf("(") != -1 ? out.substring(1, out.length() - 1) : out, 
+						((Double)stack.pop()).doubleValue());
 				// if there are parentheses, then remove the end ones. If not, just print
+			}
 			else if(divideByZero) // else if / by 0, say so
-				System.out.format("%-36s%-36s%12s%n", s, "UNDEFINED", "UNDEFINED");
+				System.out.format("%-36s%-63s%12s%n", s, "UNDEFINED", "UNDEFINED");
 			else if(error) // if error, error
-				System.out.format("%-36s%-36s%12s%n", s, "INVALID", "INVALID");
+				System.out.format("%-36s%-63s%12s%n", s, "INVALID", "INVALID");
 		}
 		else // say error if the beginning input was bad (not enough operators)
-			System.out.format("%-36s%-36s%12s%n", s, "INVALID", "INVALID");
+			System.out.format("%-36s%-63s%12s%n", s, "INVALID", "INVALID");
 	}
 }
