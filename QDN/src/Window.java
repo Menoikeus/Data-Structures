@@ -64,13 +64,15 @@ public class Window extends JFrame implements KeyListener{
 		{
 			currentState = State.QSIZE;
 		}
-		if(e.getKeyCode() == KeyEvent.VK_F1 || e.getKeyCode() == KeyEvent.VK_H)
+		if(e.getKeyCode() == KeyEvent.VK_F1 ||
+				e.getKeyCode() == KeyEvent.VK_H)
 		{
-			JOptionPane.showMessageDialog(null, "WHAT NUMBER KEY DO I PRESS TO ACCESS A GRAPH?\n\n" +
-					"1: TOTAL TASKS PROCESSED\n" +
-					"2: NUMBER OF TIME STEPS THE PROCESSOR WAS FULL\n" +
-					"3: NUMBER OF TIME STEPS THE QUEUE WAS EMPTY\n" +
-					"4: PROCESSES STILL IN QUEUE\n");
+		JOptionPane.showMessageDialog(null, 
+			"WHAT NUMBER KEY DO I PRESS TO ACCESS A GRAPH?\n\n" +
+			"1: TOTAL TASKS PROCESSED\n" +
+			"2: NUMBER OF TIME STEPS THE PROCESSOR WAS FULL\n" +
+			"3: NUMBER OF TIME STEPS THE QUEUE WAS EMPTY\n" +
+			"4: PROCESSES STILL IN QUEUE\n");
 		}
 	}
 	

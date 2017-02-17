@@ -1,5 +1,7 @@
 
 public class Task {
+	// task variables, like id, steps, and if it's newly created
+	// (since we don't process on first turn)
 	int number, numSteps;
 	boolean newlyCreated;
 	
@@ -12,6 +14,7 @@ public class Task {
 	
 	public boolean decrementSteps()
 	{
+		// if the thing is not newly created, then decrement
 		if(newlyCreated)
 			return newlyCreated = false;
 		else
@@ -21,6 +24,7 @@ public class Task {
 		}
 	}
 	
+	// accessors
 	public int getNumber()
 	{
 		return number;

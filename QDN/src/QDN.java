@@ -17,7 +17,8 @@ public class QDN {
 		final int NUM_TRIALS = 
 				Integer.parseInt(JOptionPane.showInputDialog(null, 
 						"1) One trial with no graphs or " +
-						"2) two trials with graphs? (TYPE '1' OR '2')"))
+						"2) two trials with graphs? " +
+						"(TYPE '1' OR '2')"))
 						== 1 ? 1 : 25;
 		
 		//
@@ -39,7 +40,8 @@ public class QDN {
 				if(Math.random() < .63)
 				{
 					// add the task with random timestep
-					processor.addTask(new Task(numTasks, 1+(int)(Math.random() * 30)));
+					processor.addTask(new Task(numTasks, 
+							1 + (int)(Math.random() * 30)));
 					numTasks++;
 				}
 				
@@ -48,7 +50,11 @@ public class QDN {
 				processor.process();
 				
 				// print the info
-				outFile.print(String.format("TIME STEP = %-5d QUEUE SIZE = %-3d TASKS IN PROCESS = %-5d%n", cycles, processor.getQueueSize(), processor.getNumTasks()));
+				outFile.print(String.format("TIME STEP = %-5d"
+						+ " QUEUE SIZE = %-3d"
+						+ " TASKS IN PROCESS = %-5d%n", 
+						cycles, processor.getQueueSize(), 
+						processor.getNumTasks()));
 				processor.print();
 			}
 			
@@ -60,19 +66,31 @@ public class QDN {
 			outFile.println("\n\n=============");
 			outFile.println("FINAL REPORT");
 			outFile.println("=============\n");
-			outFile.println("Total number of tasks processed = " + processor.getTasksProcessed());
-			outFile.println("Number of time steps processor was full = " + processor.getTimesFull());
-			outFile.println("Number of time steps the queue was empty = " + processor.getTimesQueueEmpty());
-			outFile.println("Processes still in queue = " + processor.getQueueSize());
-			outFile.println("Total number of tasks created = " + processor.getTotalTasksEncountered());
+			outFile.println("Total time steps elapsed = "
+					+ 1000);
+			outFile.println("Total number of tasks processed = "
+					+ processor.getTasksProcessed());
+			outFile.println("Number of time steps processor was full = "
+					+ processor.getTimesFull());
+			outFile.println("Number of time steps the queue was empty = "
+					+ processor.getTimesQueueEmpty());
+			outFile.println("Processes still in queue = "
+					+ processor.getQueueSize());
+			outFile.println("Total number of tasks created = "
+					+ processor.getTotalTasksEncountered());
 			outFile.println();
 			
-			trialInfo.add(new int[]{processor.getTasksProcessed(), processor.getTimesFull(), processor.getTimesQueueEmpty(), processor.getQueueSize()});
+			trialInfo.add(new int[]{processor.getTasksProcessed(), 
+					processor.getTimesFull(), 
+					processor.getTimesQueueEmpty(), 
+					processor.getQueueSize()});
 		}
 		
 		// Some average info
-		System.out.println("Average processes completed = " + (double)sumProcessed/NUM_TRIALS);
-		System.out.println("Average timesteps full = " + (double)sumFull/NUM_TRIALS);
+		System.out.println("Average processes completed = "
+				+ (double)sumProcessed/NUM_TRIALS);
+		System.out.println("Average timesteps full = "
+				+ (double)sumFull/NUM_TRIALS);
 		
 		// closes output file
 		outFile.close();
