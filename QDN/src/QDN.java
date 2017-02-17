@@ -32,34 +32,31 @@ public class QDN {
 			int cycles = 0, numTasks = 1;
 			Processor processor = new Processor(outFile);
 			
-			int x = 0;
-			int counter = 1;
 			// run a thousand times
 			while(cycles++ < 1000)
 			{
-				//try{Thread.sleep(1);}catch(Exception e){}
+				// randomly create task
 				if(Math.random() < .63)
-				//if(true)
 				{
-					x++;
+					// add the task with random timestep
 					processor.addTask(new Task(numTasks, 1+(int)(Math.random() * 30)));
-					//processor.addTask(new Task(numTasks, counter));
-					counter++;
-					
 					numTasks++;
 				}
 				
+				// processor logic, moving to thread and processing
 				processor.moveToThread();
 				processor.process();
 				
+				// print the info
 				outFile.print(String.format("TIME STEP = %-5d QUEUE SIZE = %-3d TASKS IN PROCESS = %-5d%n", cycles, processor.getQueueSize(), processor.getNumTasks()));
 				processor.print();
 			}
-			System.out.println((double)x/1000);
 			
+			// get sums to check average
 			sumFull += processor.getTimesFull();
 			sumProcessed += processor.getTasksProcessed();
 			
+			// Final report
 			outFile.println("\n\n=============");
 			outFile.println("FINAL REPORT");
 			outFile.println("=============\n");
@@ -73,11 +70,14 @@ public class QDN {
 			trialInfo.add(new int[]{processor.getTasksProcessed(), processor.getTimesFull(), processor.getTimesQueueEmpty(), processor.getQueueSize()});
 		}
 		
+		// Some average info
 		System.out.println("Average processes completed = " + (double)sumProcessed/NUM_TRIALS);
 		System.out.println("Average timesteps full = " + (double)sumFull/NUM_TRIALS);
 		
+		// closes output file
 		outFile.close();
 		
+		// graphics
 		Window tool = new Window(trialInfo);
 		tool.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		tool.setTitle("Graphs");

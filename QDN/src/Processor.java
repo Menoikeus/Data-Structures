@@ -42,6 +42,7 @@ public class Processor {
 	
 	public void process()
 	{
+		// go through processor and process
 		for(int i = thread.size() - 1; i >= 0; i--)
 		{
 			Task t = thread.get(i);
@@ -92,6 +93,7 @@ public class Processor {
 		return totalTasksEncountered;
 	}
 	
+	// we can print (in order) here
 	public void print()
 	{
 		for(String s : output)
