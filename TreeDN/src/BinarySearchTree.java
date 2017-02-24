@@ -1,13 +1,15 @@
 public class BinarySearchTree extends BinaryTree
 {
-	int width;
+	private int width;
 	
+	// constructor
 	public BinarySearchTree()
 	{
 		super();
 		width = 0;
 	}
 	
+	//iterative find written by class
 	public TreeNode find (Comparable key)
 	{
 		TreeNode p = getRoot();
@@ -21,6 +23,7 @@ public class BinarySearchTree extends BinaryTree
 		return p;
 	}	
 	
+	// recursion find written by class
 	public TreeNode RecurFind (Comparable Elder, TreeNode node)
 	{
 		if (node != null)
@@ -38,7 +41,7 @@ public class BinarySearchTree extends BinaryTree
 		}
 	}
 	
-	
+	// helper method we wrote
 	public void insert (Comparable Elder)
 	{
 		if( this.getRoot() == null )
@@ -47,6 +50,7 @@ public class BinarySearchTree extends BinaryTree
 			insert2(Elder, this.getRoot());
 	}
 	
+	// insert method we wrote together
 	public void insert2 (Comparable Elder, TreeNode node)
 	{
 		if(Elder.compareTo(node.getValue()) <= 0)
@@ -67,6 +71,7 @@ public class BinarySearchTree extends BinaryTree
 		}
 	}
 	
+	// get width helper method
 	public int width()
 	{
 		width = 0;
@@ -76,21 +81,35 @@ public class BinarySearchTree extends BinaryTree
 	
 	public int widthCheck(TreeNode node)
 	{
-		if(node == null)
-			return 0;
-		if(node.getRight() == null && node.getLeft() == null)
+		if(node.getRight() == null && node.getLeft() == null) 
+			// if it's a leaf, then it has depth 1
 			return 1;
 		else
 		{
-			int left = depthCheck(node.getLeft());
-			int right = depthCheck(node.getRight());
+			// if left/right are not null, run a widthcheck, 
+			// which will return the longest path
+			// with aforementioned left/right node as root
+			int left = node.getLeft() == null ? 
+					0 : widthCheck(node.getLeft());
+			int right = node.getRight() == null ? 
+					0 : widthCheck(node.getRight());
 
+			// if this path through root (the longest path left 
+			// and right, + the root itself) is longer
+			// than current highest width, increment
 			if(left + right + 1 > width)
 				width = left + right + 1;
-			return left + right + 1;
+			
+			// return one of the longest paths 
+			// (left or right) and add root
+			// We only add one side because, if a path
+			// has to choose between two routes,
+			// it will obviously choose the longer one
+			return 1 + (left > right ? left : right);
 		}
 	}
 	
+	// helper method
 	public int height()
 	{
 		return depthCheck(getRoot());	
@@ -98,21 +117,33 @@ public class BinarySearchTree extends BinaryTree
 	
 	public int depthCheck(TreeNode node)
 	{
+		// if it's a leaf, add one to the count
 		if(node.getRight() == null && node.getLeft() == null)
 			return 1;
 		else
 		{
-			int left = node.getLeft() != null ? depthCheck(node.getLeft()) : 0;
-			int right = node.getRight() != null ? depthCheck(node.getRight()) : 0;
+			// if left/right aren't null, then 
+			// run depth check to find depth
+			// of left and right
+			int left = node.getLeft() != null ? 
+					depthCheck(node.getLeft()) : 0;
+			int right = node.getRight() != null ? 
+					depthCheck(node.getRight()) : 0;
+			
+			// return the larger value 
+			// (since height/depth depends on 
+			// longest route from root to leaf)
 			return 1 + (left > right ? left : right);
 		}
 	}
 	
 	public int depth()
 	{
+		// but why?
 		return height() - 1;
 	}
 	
+	// helper method
 	public int leaves()
 	{
 		return leafCheck(getRoot());
@@ -120,17 +151,19 @@ public class BinarySearchTree extends BinaryTree
 	
 	public int leafCheck(TreeNode node)
 	{
+		// if it's a leaf, then count it
 		if(node.getRight() == null && node.getLeft() == null)
-		{
 			return 1;
-		}
 		else
 		{
-			int left = node.getLeft() != null ? leafCheck(node.getLeft()) : 0;
-			int right = node.getRight() != null ? leafCheck(node.getRight()) : 0;
+			// check left/right null, then leafcheck the non nulls
+			int left = node.getLeft() != null ? 
+					leafCheck(node.getLeft()) : 0;
+			int right = node.getRight() != null ? 
+					leafCheck(node.getRight()) : 0;
+			
+			// add num leaves from left and right
 			return left + right;
-		}
-		
+		}	
 	}
-	
 }
