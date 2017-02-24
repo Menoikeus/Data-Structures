@@ -55,7 +55,7 @@ public class BinarySearchTree extends BinaryTree
 	{
 		if(Elder.compareTo(node.getValue()) <= 0)
 		{
-			System.out.println( Elder + " move left" );
+			//System.out.println( Elder + " move left" );
 			if(node.getLeft() != null)
 				insert2(Elder, node.getLeft());
 			else
@@ -63,7 +63,7 @@ public class BinarySearchTree extends BinaryTree
 		}
 		else
 		{
-			System.out.println( Elder + " move right" );
+			//System.out.println( Elder + " move right" );
 			if(node.getRight() != null)
 				insert2(Elder, node.getRight());
 			else
