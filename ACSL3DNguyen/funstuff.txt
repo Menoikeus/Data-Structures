@@ -1,0 +1,79 @@
+/*
+	public static void set(boolean[][] b, int row, int col)
+	{
+		b[row][column] = true;
+	}*/
+		/*
+		if(row - 1 > 0)
+		{
+			b[row][col] = b[row][col] ? false : true;
+			if(row - 2 > 0)
+				b[row][col] = b[row][col] ? false : true;
+		}
+		if(row - 2 > 0)
+		{
+			b[row][col] = b[row][col] ? false : true;
+			if(row - 2 > 0)
+				b[row][col] = b[row][col] ? false : true;
+		}
+		if(row - 1 > 0)
+		{
+			b[row][col] = b[row][col] ? false : true;
+			if(row - 2 > 0)
+				b[row][col] = b[row][col] ? false : true;
+		}
+		if(row - 1 > 0)
+		{
+			b[row][col] = b[row][col] ? false : true;
+			if(row - 2 > 0)
+				b[row][col] = b[row][col] ? false : true;
+		}*/
+	
+	/*
+	public static boolean[][] press(boolean[][] b, int row, int col)
+	{
+		boolean[][] tempB = new boolean[8][8];
+		tempB[row][col] = true;
+		
+		if(row - 1 > 0)
+			inPress(b, row - 1, col, 3, Direction.UP);
+		if(row + 1 < b.length)
+			inPress(b, row + 1, col, 3, Direction.DOWN);
+		if(col - 1 > 0)
+			inPress(b, row, col - 1, 3, Direction.LEFT);
+		if(col + 1 < b[row].length)
+			inPress(b, row, col + 1, 3, Direction.RIGHT);
+		
+		for(int i = 0; i < b.length; i++)
+			for(int j = 0; j < b[i].length; j++)
+			{
+				if(tempB[i][j])
+					b[i][j] = b[i][j] ? false : true;
+			}
+			
+		
+		return b;
+	}
+	
+	public static void inPress(boolean[][] b, int row, int col, int num, Direction dir)
+	{
+		b[row][col] = true;
+		
+		num--;
+		if(num != 0)
+		{
+			if(row - 1 > 0 && dir != Direction.UP)
+				inPress(b, row - 1, col, num, Direction.UP);
+			if(row + 1 < b.length && dir != Direction.DOWN)
+				inPress(b, row + 1, col, num, Direction.DOWN);
+			if(col - 1 > 0 && dir != Direction.LEFT)
+				inPress(b, row, col - 1, num, Direction.LEFT);
+			if(col + 1 < b[row].length && dir != Direction.RIGHT)
+				inPress(b, row, col + 1, num, Direction.RIGHT);
+		}
+	}
+	
+	public enum Direction
+	{
+		LEFT, RIGHT, UP, DOWN;
+	}*/
