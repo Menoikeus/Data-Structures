@@ -148,7 +148,9 @@ public class ACSL4DNguyen {
 				city[i][4] = 4;
 		}
 		
-		int[][] cloned = city.clone();
+		int[][] cloned = new int[6][];
+		for(int i = 0; i < city.length; i++)
+			cloned[i] = city[i].clone();
 
 		boolean utterFailure = false;
 		for(int i = 1; i <= 4 && !utterFailure; i++)
@@ -183,64 +185,63 @@ public class ACSL4DNguyen {
 				}
 		}
 		
-		if(utterFailure)
+		if(utterFailure || !isValid(city))
 		{
-			city = cloned.clone();
-			boolean done = false;
-			
-			int offset = 1;
-			while(!done)
-			{
-				utterFailure = false;
-				for(int i = 1; i <= 4 && !utterFailure; i++)
-				{
-						for(int j = 1; j <= 4 && !utterFailure; j++)
-						{
-							if(city[i][j] == 0)
-							{
-								int num = 1;
-								boolean failed = false;
-								do
-								{
-									failed = false;
-									for(int x = 1; x <= 4 && !failed; x++)
-									{
-										if(city[i][x] == num)
-											failed = true;
-										if(city[x][j] == num)
-											failed = true;
-									}
-									if(failed)
-									{
-										if(num == 4)
-											utterFailure = true;
-										else
-											num++;
-									}
-									else if(offset > 0)
-									{
-										failed = true;
-										offset--;
-									}
-								}while(failed && !utterFailure);
-								if(!utterFailure)
-									city[i][j] = num;
-							}
-						}
-				}
+			do{
+				for(int i = 0; i < city.length; i++)
+					city[i] = cloned[i].clone();
 				
-				if(!utterFailure)
-					done = true;
-				else
-					offset++;
-			}
+					utterFailure = false;
+					for(int i = 1; i <= 4 && !utterFailure; i++)
+					{
+							for(int j = 1; j <= 4 && !utterFailure; j++)
+							{
+								if(city[i][j] == 0)
+								{
+									int num = 1;
+									boolean failed = false;
+									
+									boolean unused[] = new boolean[5];
+									do
+									{	
+										failed = false;
+										for(int x = 1; x <= 4 && !failed; x++)
+										{
+											if(city[i][x] == num)
+												failed = true;
+											else if(city[x][j] == num)
+												failed = true;
+										}
+
+										if(!failed)
+											unused[num] = true;
+										num++;
+									}while(!utterFailure && num <= 4);
+									
+									utterFailure = true;
+									for(boolean b : unused)
+									{
+										if(b)
+											utterFailure = false;
+									}
+									
+									if(!utterFailure)
+									{
+										int actNum;
+										while(!unused[actNum = (int)(Math.random() * 5)]);
+										city[i][j] = actNum;
+									}
+								}
+							}
+					}
+
+			}while(!isValid(city));
 		}
-		
+	
 		/*
-		System.out.println("\n\n");
-		for(int i = 0; i < city.length; i++)
+		for(int i = 1; i < city.length-1; i++)
 		{
-			for(int j = 0; j < city[i].length; j++)
+			for(int j = 1; j < city[i].length-1; j++)
 				System.out.print(city[i][j]);
 			System.out.println();
 		}*/
@@ -250,6 +251,91 @@ public class ACSL4DNguyen {
 			String s = JOptionPane.showInputDialog(null, "INPUT: ");
 			System.out.println(city[Integer.parseInt(s.substring(0,1))][Integer.parseInt(s.substring(1,2))]);
 		}
+	}
+	
+	public static boolean isValid(int[][] c)
+	{
+		boolean stillValid = true;
+		for(int i = 1; i <= 4 && stillValid; i++)
+		{
+			int height = c[i][0];
+			int count = 1;
+			int max = c[i][1];
+			for(int j = 2; j <= 4; j++)
+			{
+				if(c[i][j] > max)
+				{
+					count++;
+					max = c[i][j];
+				}
+			}
+			if(count != height)
+				stillValid = false;
+		}
+		if(!stillValid)
+			return false;
+		
+		// other side
+		for(int i = 1; i <= 4 && stillValid; i++)
+		{
+			int height = c[i][5];
+			int count = 1;
+			int max = c[i][4];
+			for(int j = 3; j >= 1; j--)
+			{
+				if(c[i][j] > max)
+				{
+					count++;
+					max = c[i][j];
+				}
+			}
+			if(count != height)
+				stillValid = false;
+		}
+		if(!stillValid)
+			return false;
+		
+		boolean stillValid2 = true;
+		for(int i = 1; i <= 4 && stillValid2; i++)
+		{
+			int height = c[0][i];
+			int count = 1;
+			int max = c[1][i];
+			for(int j = 2; j <= 4; j++)
+			{
+				if(c[j][i] > max)
+				{
+					count++;
+					max = c[j][i];
+				}
+			}
+			if(count != height)
+				stillValid2 = false;
+		}
+		if(!stillValid2)
+			return false;
+		
+		//bottom
+		for(int i = 1; i <= 4 && stillValid2; i++)
+		{
+			int height = c[5][i];
+			int count = 1;
+			int max = c[4][i];
+			for(int j = 3; j >= 1; j--)
+			{
+				if(c[j][i] > max)
+				{
+					count++;
+					max = c[j][i];
+				}
+			}
+			if(count != height)
+				stillValid2 = false;
+		}
+		if(!stillValid2)
+			return false;
+		
+		return true;
 	}
 }
 
